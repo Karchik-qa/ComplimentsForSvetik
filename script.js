@@ -93,3 +93,24 @@ async function hashPassword(password) {
     const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
     return hashHex;
 }
+// Функция для загрузки изображения котика
+async function generateCat() {
+    const catImage = document.getElementById('cat-image');
+    const catImageContainer = document.getElementById('cat-image-container');
+
+    try {
+        // Делаем запрос к API
+        const response = await fetch('https://api.thecatapi.com/v1/images/search');
+        const data = await response.json();
+
+        if (data && data[0]?.url) {
+            // Устанавливаем URL изображения
+            catImage.src = data[0].url;
+            catImage.classList.remove('hidden');
+        } else {
+            console.error('Не удалось загрузить котика :(');
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке котика:', error);
+    }
+}
