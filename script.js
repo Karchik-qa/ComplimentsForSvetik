@@ -65,3 +65,31 @@ function generateCompliment() {
         complimentElement.style.opacity = 1;
     }, 300);
 }
+const correctPasswordHash = "7ab6244fc6ae9621510dd5777dba50144950b0f898972247eecbef7ae724e59c";
+
+async function checkPassword() {
+    const inputPassword = document.getElementById('password-input').value;
+    const errorMessage = document.getElementById('error-message');
+    const authContainer = document.getElementById('auth-container');
+    const contentContainer = document.getElementById('content-container');
+
+    // Хешируем введённый пароль
+    const inputHash = await hashPassword(inputPassword);
+
+    if (inputHash === correctPasswordHash) {
+        authContainer.classList.add('hidden');
+        contentContainer.classList.remove('hidden');
+    } else {
+        errorMessage.classList.remove('hidden');
+    }
+}
+
+// Функция для хеширования пароля
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}

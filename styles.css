@@ -66,3 +66,25 @@ button:active {
         transform: translateY(0);
     }
 }
+.hidden {
+    display: none;
+}
+
+#auth-container {
+    text-align: center;
+}
+
+#password-input {
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 300px;
+}
+
+#error-message {
+    color: red;
+    margin-top: 10px;
+}
